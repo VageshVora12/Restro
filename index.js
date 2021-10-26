@@ -1,35 +1,25 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import userRoute from './Route/UserRoute';
-import categoryRoute from './Route/CategoryRoute';
-import productRoute from './Route/ProductRoute';
-import loginRoute from './Route/LoginRoute';
-import sessionRoute from './Route/SessionRoute';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-const app = express();
-app.use(express.json());
-app.use(express.static(__dirname)); 
-app.use(session({
-    secret:'Your_Secret_Key',
-    resave:true,
-    saveUninitialized:true
-}))
-app.use(cors({credentials:true,origin:"http://localhost:3000"}));
-app.use(cookieParser());
-app.use('/user', userRoute);
-app.use('/category',categoryRoute);
-app.use('/product',productRoute);
-app.use('/login',loginRoute);
-app.use('/session',sessionRoute);
-mongoose.connect('mongodb://localhost:27017/ecom')
-    .then(() => {
-        console.log("mongodb started.");
-    }).catch(() => {
-        console.log("mongodb connection failed.")
-    })
-app.listen(9000, function () {
-    console.log("SERVER STARTED");
-}
-)
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {CookiesProvider} from 'react-cookie'
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+ReactDOM.render(
+  <React.StrictMode>
+    <CookiesProvider>
+    <App/>
+    </CookiesProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
